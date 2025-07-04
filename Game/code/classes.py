@@ -16,6 +16,10 @@ class Personagem:
         self.perso_surfs = personagem_surf
         self.rect_back = self.perso_surfs[0].get_frect(bottomleft = (100,WINDOW_HEIGHT))
         self.rect_front = self.perso_surfs[1].get_frect(bottomleft = (100,WINDOW_HEIGHT))
+
+        #para ui
+        self.image = self.perso_surfs[0]
+        self.rect = self.image.get_frect(bottomleft = (100,WINDOW_WIDTH))
     
         #Funcao pro ataque basico
     def ataque(self):
@@ -50,6 +54,7 @@ class Mago(pygame.sprite.Sprite, Personagem):
     def __init__(self, name, personagem_sprites, groups, MaxHp = 180, Hp = 180, MaxMp = 200, Mp = 200, Defense = 15, Speed = 10, skills = Ataques):
         super().__init__(groups)
         self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.classe = 'Mago'
 
         #pra cada nome e detalhe no dicionario Ataques, se detalhe = 'Mago' agente copia todos os detalhes da skill com esse nome
         self.skills_mago = {}
@@ -70,6 +75,7 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
     def __init__(self, name, personagem_sprites, groups, MaxHp = 250, Hp = 250, MaxMp = 100, Mp = 100, Defense = 40, Speed = 7, skills = Ataques):
         super().__init__(groups)
         self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.classe = 'Guerreiro'
 
 
 
@@ -91,6 +97,7 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
     def __init__ (self ,name, personagem_sprites, groups, MaxHp = 200 ,Hp = 200 ,MaxMp = 150 ,Mp = 150 ,Defense = 25 ,Speed = 16 ,skills = Ataques) :
         super().__init__(groups)
         self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.classe = 'Arqueiro'
 
         
         self.skills_arqueiro = {}
@@ -105,4 +112,4 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
         else:
             print("Perdeu o foco! Um simples arranhão ")
             self.dmg = super().ataque()
-        return self.dmg
+        return int(self.dmg)
