@@ -1,12 +1,10 @@
 import pygame
 import os
 import random
+from settings import *
 
 pygame.init()
 pygame.mixer.init()
-
-LARGURA_TELA = 800
-ALTURA_TELA = 600
 
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 
