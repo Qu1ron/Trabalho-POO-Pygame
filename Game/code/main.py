@@ -1,4 +1,6 @@
 from settings import *
+from efeitos import *
+from classes import *
 
 class Jogo:
      def __init__(self):
@@ -12,6 +14,9 @@ class Jogo:
         self.all_sprites = pygame.sprite.Group()
 
         #data
+        
+        self.player1 = Mago('Quiron',SPRITES['mago'], self.all_sprites, False)
+        self.player2 = Guerreiro('Dummy', SPRITES['guerreiro'], self.all_sprites, True)
 
         #ui
 
@@ -32,10 +37,9 @@ class Jogo:
             
 
             # draw  
-            
-            
-            
+
             self.all_sprites.draw(self.display_surface)
+            
             
             pygame.display.update()
 

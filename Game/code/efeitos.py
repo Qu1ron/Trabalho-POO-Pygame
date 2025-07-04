@@ -6,7 +6,7 @@ from settings import *
 pygame.init()
 pygame.mixer.init()
 
-tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+tela = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # Função para carregar uma imagem da pasta assets/imagens
 def carregar_imagem(nome_arquivo, redimensionar = None):
@@ -27,23 +27,26 @@ def carregar_som(nome_arquivo):
 # Sprites com suas respectivas imagens frente e costas
 SPRITES = {
     'mago': {
-        'frente': carregar_imagem('mago_frente.png', (150, 150)),
-        'costas': carregar_imagem('mago_costas.png', (150, 150))
+        'placeholder': carregar_imagem('mage_placeholder.png', (150,150)),
+ #       'frente': carregar_imagem('mago_frente.png', (150, 150)),
+ #       'costas': carregar_imagem('mago_costas.png', (150, 150))
     },
     'guerreiro': {
-        'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
-        'costas': carregar_imagem('guerreiro_costas.png', (150, 150))
+        'placeholder': carregar_imagem('mage_placeholder.png', (150,150)),
+ #       'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
+ #       'costas': carregar_imagem('guerreiro_costas.png', (150, 150))
     },
     'arqueiro': {
-        'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
-        'costas': carregar_imagem('arqueiro_costas.png', (150, 150))
-    }
+        'placeholder': carregar_imagem('mage_placeholder.png', (150,150)),
+ #       'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
+ #       'costas': carregar_imagem('arqueiro_costas.png', (150, 150))
+    },
 }
-
+'''
 MAPAS = {
-    'floresta': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA)),
-    'castelo': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA)),
-    'caverna': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA))
+    'floresta': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'castelo': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'caverna': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT))
 }
 
 MUSICAS = {
@@ -69,7 +72,7 @@ SONS = {
 
 FONTE_DANO = pygame.font.Font(os.path.join('assets', 'fontes', 'fonte_pixel.ttf'), 36)
 
-
+'''
 def tocar_musicas_por_mapa(nome_mapa):
     # Escolhe uma música aleatória do mapa e toca em loop
 
