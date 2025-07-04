@@ -4,7 +4,7 @@ from settings import *
 
 class Personagem:
         #Funcao para inicializar as variaveis
-    def get_data(self, name, personagem_surf, MaxHp, Hp, MaxMp, Mp, Defense, Speed):
+    def get_data(self, name, MaxHp, Hp, MaxMp, Mp, Defense, Speed):
         #Salvar os valores em variaveis:
         self.name = name
         self.MaxHp = MaxHp
@@ -13,9 +13,6 @@ class Personagem:
         self.Mp = Mp 
         self.Defense = Defense
         self.Speed = Speed
-        self.perso_surfs = personagem_surf
-        self.rect_back = self.perso_surfs[0].get_frect(bottomleft = (100,WINDOW_HEIGHT))
-        self.rect_front = self.perso_surfs[1].get_frect(bottomleft = (100,WINDOW_HEIGHT))
     
         #Funcao pro ataque basico
     def ataque(self):
@@ -47,9 +44,14 @@ class Personagem:
             return False
                
 class Mago(pygame.sprite.Sprite, Personagem):
-    def __init__(self, name, personagem_sprites, groups, MaxHp = 180, Hp = 180, MaxMp = 200, Mp = 200, Defense = 15, Speed = 10, skills = Ataques):
+    def __init__(self, name, personagem_sprites, groups, p2, MaxHp = 180, Hp = 180, MaxMp = 200, Mp = 200, Defense = 15, Speed = 10, skills = Ataques):
         super().__init__(groups)
-        self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.image = personagem_sprites['placeholder']
+        if not p2:
+            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+        else:
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
 
         #pra cada nome e detalhe no dicionario Ataques, se detalhe = 'Mago' agente copia todos os detalhes da skill com esse nome
         self.skills_mago = {}
@@ -67,9 +69,14 @@ class Mago(pygame.sprite.Sprite, Personagem):
         return int(self.dmg)
     
 class Guerreiro(pygame.sprite.Sprite, Personagem):
-    def __init__(self, name, personagem_sprites, groups, MaxHp = 250, Hp = 250, MaxMp = 100, Mp = 100, Defense = 40, Speed = 7, skills = Ataques):
+    def __init__(self, name, personagem_sprites, groups, p2, MaxHp = 250, Hp = 250, MaxMp = 100, Mp = 100, Defense = 40, Speed = 7, skills = Ataques):
         super().__init__(groups)
-        self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.image = personagem_sprites['placeholder']
+        if not p2:
+            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+        else:
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
 
 
 
@@ -88,9 +95,14 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         return int(self.dmg)
         
 class Arqueiro(pygame.sprite.Sprite, Personagem) :
-    def __init__ (self ,name, personagem_sprites, groups, MaxHp = 200 ,Hp = 200 ,MaxMp = 150 ,Mp = 150 ,Defense = 25 ,Speed = 16 ,skills = Ataques) :
+    def __init__ (self ,name, personagem_sprites, groups, p2, MaxHp = 200 ,Hp = 200 ,MaxMp = 150 ,Mp = 150 ,Defense = 25 ,Speed = 16 ,skills = Ataques) :
         super().__init__(groups)
-        self.get_data(name,personagem_sprites,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        self.image = personagem_sprites['placeholder']
+        if not p2:
+            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+        else:
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
 
         
         self.skills_arqueiro = {}

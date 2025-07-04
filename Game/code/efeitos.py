@@ -6,11 +6,11 @@ from settings import *
 pygame.init()
 pygame.mixer.init()
 
-tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+tela = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # Função para carregar uma imagem da pasta assets/imagens
 def carregar_imagem(nome_arquivo, redimensionar = None):
-    caminho = os.path.join('assets', 'imagens', nome_arquivo)
+    caminho = os.path.join(os.path.dirname(__file__), '..', 'assets', 'imagens', nome_arquivo)
     imagem = pygame.image.load(caminho).convert_alpha()
     
     if redimensionar:
@@ -20,30 +20,30 @@ def carregar_imagem(nome_arquivo, redimensionar = None):
 
 # Função para carregar um som da pasta assets/imagens
 def carregar_som(nome_arquivo):
-    caminho = os.path.join('assets', 'sons', nome_arquivo)
+    caminho = os.path.join(os.path.dirname(__file__), '..', 'assets', 'sons', nome_arquivo)
 
     return pygame.mixer.Sound(caminho)
 
 # Sprites com suas respectivas imagens frente e costas
 SPRITES = {
     'mago': {
-        'frente': carregar_imagem('mago_frente.png', (150, 150)),
-        'costas': carregar_imagem('mago_costas.png', (150, 150))
+       'frente': carregar_imagem('mago_frente.png', (150, 150)),
+       'costas': carregar_imagem('mago_costas.png', (150, 150))
     },
     'guerreiro': {
-        'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
-        'costas': carregar_imagem('guerreiro_costas.png', (150, 150))
+       'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
+       'costas': carregar_imagem('guerreiro_costas.png', (150, 150))
     },
     'arqueiro': {
-        'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
-        'costas': carregar_imagem('arqueiro_costas.png', (150, 150))
-    }
+       'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
+       'costas': carregar_imagem('arqueiro_costas.png', (150, 150))
+    },
 }
 
 MAPAS = {
-    'floresta': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA)),
-    'castelo': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA)),
-    'caverna': carregar_imagem('mapa_floresta.png', (LARGURA_TELA, ALTURA_TELA))
+    'floresta': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'castelo': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'caverna': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT))
 }
 
 MUSICAS = {
@@ -52,12 +52,12 @@ MUSICAS = {
         os.path.join('assets', 'musicas', 'musica_floresta2.mp3')
     ],
     'castelo': [
-        os.path.join('assets', 'musicas', 'musica_castelo_1.wav'), 
-        os.path.join('assets', 'musicas', 'musica_castelo_2.mp3')
+        os.path.join('assets', 'musicas', 'musica_castelo1.wav'), 
+        os.path.join('assets', 'musicas', 'musica_castelo2.mp3')
     ],
     'caverna': [
-        os.path.join('assets', 'musicas', 'musica_caverna_1.mp3'),
-        os.path.join('assets', 'musicas', 'musica_caverna_2.wav')
+        os.path.join('assets', 'musicas', 'musica_caverna1.mp3'),
+        os.path.join('assets', 'musicas', 'musica_caverna2.wav')
     ]
 }
 
@@ -67,7 +67,7 @@ SONS = {
     'clique': carregar_som('clique.wav'),
 }
 
-FONTE_DANO = pygame.font.Font(os.path.join('assets', 'fontes', 'fonte_pixel.ttf'), 36)
+FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'fonte_pixel.ttf'), 36)
 
 
 def tocar_musicas_por_mapa(nome_mapa):
