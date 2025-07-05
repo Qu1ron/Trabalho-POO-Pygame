@@ -11,25 +11,26 @@ class Jogo:
         pygame.display.set_caption('RPG Realm')
         self.clock = pygame.time.Clock()
         self.running = True
-        self.prev_Turn = None
+        self.Turn_tracker = 1
         self.Turn = 'atacante'
 
 
         #groups
         self.all_sprites = pygame.sprite.Group()
-        self.group_p1 = pygame.sprite.Group()
-        self.group_p2 = pygame.sprite.Group()
+        
 
         #data
 
         self.player1 = Mago('Dummy1', False)
         self.player2 = Guerreiro('Dummy1', True)
 
-        self.dmg_atacante = 0
-        self.dmg_defensor = 0
+        self.dmg_p1 = 0
+        self.dmg_p2 = 0
+
+        self.desvio_p1 = False
+        self.desvio_p2 = False
         
         
-        #teste da ui
         
         
         #ui
@@ -38,6 +39,7 @@ class Jogo:
 
         #timers
         self.timer_tend = Timer(1000, func = self.change_turn)
+        self.timer_tres = Timer(1000, func = self.turn_result)
 
 
      def get_input(self, state, data1= None, data2 = None):
@@ -82,32 +84,36 @@ class Jogo:
             
 
         elif state == 'Ataque Especial':
-            self.apply_atk(data1,data2)
+            self.apply_atk(data1)
             self.timer_tend.activate()
         
         elif state == 'Desviar':
-            pass
+            if self.Turn == 'atacante':
+                self.desvio_p1 = self.uip1.atacante.dodge()
+            else:
+                self.desvio_p2 = self.uip1.atacante.dodge()
+            self.timer_tend.activate()
           
         elif state == 'Ataque Básico':
-            self.apply_atk(data1,data2)
+            self.apply_atk(data1)
             self.timer_tend.activate()
         
-     def apply_atk(self,skill,defensor):
+     def apply_atk(self,skill):
         if skill != 'atk_basico':
             dmg = Ataques[skill]['Damage']
             mp = Ataques[skill]['Mp']
-            print(f"Mp antes: {self.uip1.atacante.Mp}")
+            print(f"Mp antes: {self.uip1.atacante.Mp}\n")
             self.uip1.atacante.Mp -=mp
         else:
             dmg = self.uip1.atacante.ataque()
         if self.Turn == 'atacante':
-            self.dmg_atacante = dmg
+            self.dmg_p1 = dmg
         else:
-            self.dmg_defensor = dmg
-        print(f"Hp antes: {defensor.Hp}")
+            self.dmg_p2 = dmg
+        #print(f"Hp antes: {defensor.Hp}")
         #defensor.damage_cal(dmg)
-        print(f"Hp depois: {defensor.Hp}")
-        print(f"Mp depois: {self.uip1.atacante.Mp}")
+        #print(f"Hp depois: {defensor.Hp}")
+        print(f"Mp depois: {self.uip1.atacante.Mp}\n")
          
      def change_turn(self):
         self.uip1.atacante.kill()
@@ -123,14 +129,68 @@ class Jogo:
         self.all_sprites.add(self.uip1.atacante)
         self.all_sprites.add(self.uip1.defensor)
 
-        self.prev_Turn = self.Turn
+        
         if self.Turn == 'atacante': self.Turn = 'defensor'
         else: self.Turn = 'atacante'
+        self.timer_tres.activate()
         
      def turn_result(self):
+        if self.Turn_tracker != 2:
+            self.Turn_tracker += 1
+            return
         
+        print(f"Hp player 1 antes: {self.uip1.atacante.Hp}")
+        print(f"Hp player 2 antes: {self.uip1.defensor.Hp}\n")
+
+        if self.desvio_p1 and not self.desvio_p2:
+            self.uip1.defensor.damage_cal(self.dmg_p1)
+            self.uip1.atacante.damage_cal(self.dmg_p2)
+
+        elif not self.desvio_p1 and self.desvio_p2:
+            self.uip1.defensor.damage_cal(self.dmg_p1)
+            self.uip1.atacante.damage_cal(self.dmg_p2)
+
+        elif not self.desvio_p1 and not self.desvio_p2:
+            self.uip1.defensor.damage_cal(self.dmg_p1)
+            self.uip1.atacante.damage_cal(self.dmg_p2)
+
+        elif self.desvio_p1 and self.desvio_p2:
+            pass
         
-        pass 
+        print(f"Hp player 1 depois: {self.uip1.atacante.Hp}")
+        print(f"Hp player 2 depois: {self.uip1.defensor.Hp}\n")
+        
+        if not self.uip1.atacante.survived():
+            print("Player 1 Ganhou!")
+            self.running = False
+
+        if not self.uip1.defensor.survived():
+            print("Player 2 Ganhou!")
+            self.running = False
+
+        print("\nRecuperando mana...\n")
+
+        # Recuperação para o Atacante
+        if isinstance(self.uip1.atacante, Mago) and self.uip1.atacante.Mp <= self.uip1.atacante.MaxMp - 20:
+            self.uip1.atacante.Mp += 20
+        elif isinstance(self.uip1.atacante, Arqueiro) and self.uip1.atacante.Mp <= self.uip1.atacante.MaxMp - 12:
+            self.uip1.atacante.Mp += 12
+        elif isinstance(self.uip1.atacante, Guerreiro) and self.uip1.atacante.Mp <= self.uip1.atacante.MaxMp - 5:
+            self.uip1.atacante.Mp += 5
+        
+        # Recuperação para o Defensor
+        if isinstance(self.uip1.defensor, Mago) and self.uip1.defensor.Mp <= self.uip1.defensor.MaxMp - 20:
+            self.uip1.defensor.Mp += 20
+        elif isinstance(self.uip1.defensor, Arqueiro) and self.uip1.defensor.Mp <= self.uip1.defensor.MaxMp - 12:
+            self.uip1.defensor.Mp += 12
+        elif isinstance(self.uip1.defensor, Guerreiro) and self.uip1.defensor.Mp <= self.uip1.defensor.MaxMp - 5:
+            self.uip1.defensor.Mp += 5
+
+        self.dmg_p1 = 0
+        self.dmg_p2 = 0
+        self.desvio_p1 = False
+        self.desvio_p2 = False
+        self.Turn_tracker = 1
      
      def run(self):
         while self.running:
@@ -141,6 +201,7 @@ class Jogo:
 
             # update
             self.timer_tend.update()
+            self.timer_tres.update()
             self.all_sprites.update(dt)
             self.uip1.update()
             
