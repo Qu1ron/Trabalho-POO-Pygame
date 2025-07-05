@@ -33,7 +33,7 @@ class Personagem:
     
     # funcao pra calcular o dano
     def damage_cal(self, dano):
-        self.Hp = self.Hp - max(1, dano - (self.Defense / 2)) # max garante que o dano não seja menor que 1
+        self.Hp = self.Hp - max(0, dano - (self.Defense / 2)) # max garante que o dano não seja menor que 0
         
     # funcao pro dodge, tem que testar pra ver se a formula funciona bem   
     def dodge(self):

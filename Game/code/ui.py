@@ -1,6 +1,7 @@
 from settings import *
 import os
 from classes import *
+from time import sleep
 
 class UI:
     def __init__ (self,player1,player2,get_input):
@@ -29,6 +30,8 @@ class UI:
         self.escolha_index = {'row':0}
         self.geral_index = {'row':0}
         self.ataque_index = {'row':0}
+
+        
 
 
     def get_skills(self,player):
@@ -60,6 +63,8 @@ class UI:
         elif self.state == 'Principal':
             self.geral_index['row'] = (self.geral_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_geral)
             if keys[pygame.K_SPACE]:
+                self.nome_ataque =[]
+                self.options_ataque = []
                 self.get_input(self.state)
                 self.state = self.options_geral[self.geral_index['row']]
                 print(f"Opções {self.options_geral[self.geral_index['row']]}")
@@ -68,17 +73,30 @@ class UI:
             
             self.ataque_index['row'] = (self.ataque_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_ataque)
             if keys[pygame.K_SPACE]:
-                self.get_input(self.state,self.nome_ataque[self.ataque_index['row']],self.defensor)
+                if self.atacante.Mp <= 0:
+                    self.atacante.Mp = 0
+                    self.state = 'Principal'
+                self.get_input(self.state,self.nome_ataque[self.ataque_index['row']])
                 print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
+                
+                self.state = 'Troca turno'
+            if keys[pygame.K_ESCAPE]:
                 self.state = 'Principal'
 
 
         elif self.state == 'Desviar':
-            pass
+            self.get_input(self.state)
+            self.state = 'Principal'
 
         elif self.state == 'Ataque Básico':
-            self.get_input(self.state,'atk_basico',self.defensor)
+            self.get_input(self.state,'atk_basico')
             self.state = 'Principal'
+
+        elif self.state == 'Troca turno':
+            sleep(1)
+            self.state = 'Principal'
+
+            
 
     def menu(self,index,options):
         #background do menu
@@ -100,6 +118,7 @@ class UI:
             self.display_surface.blit(text_surf,text_rect)
 
     def update (self):
+        
         self.input()
 
 
