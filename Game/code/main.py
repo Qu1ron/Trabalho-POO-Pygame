@@ -1,5 +1,6 @@
 from settings import *
 from efeitos import *
+from ui import UI
 from classes import *
 
 class Jogo:
@@ -10,6 +11,7 @@ class Jogo:
         self.clock = pygame.time.Clock()
         self.running = True
 
+
         #groups
         self.all_sprites = pygame.sprite.Group()
 
@@ -18,7 +20,13 @@ class Jogo:
         self.player1 = Mago('Quiron',SPRITES['mago'], self.all_sprites, False)
         self.player2 = Guerreiro('Dummy', SPRITES['guerreiro'], self.all_sprites, True)
 
+        #teste da ui
+        player_surf = pygame.Surface((100, 100))
+        self.player1 = Guerreiro('teste',[player_surf, player_surf],self.all_sprites)
+        self.display_surface.fill('black')
+        
         #ui
+        self.uip1 = UI(self.player1)
 
         #timers
 
@@ -34,11 +42,13 @@ class Jogo:
             # update
 
             self.all_sprites.update(dt)
+            self.uip1.update()
             
-
-            # draw  
+            # draw
 
             self.all_sprites.draw(self.display_surface)
+
+            self.uip1.draw()
             
             
             pygame.display.update()
