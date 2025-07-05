@@ -11,7 +11,7 @@ class Jogo:
         pygame.display.set_caption('RPG Realm')
         self.clock = pygame.time.Clock()
         self.running = True
-        self.Turn = 'P1'
+        self.Turn = 'atacante'
 
 
         #groups
@@ -22,6 +22,9 @@ class Jogo:
         #data
         self.player1 = Mago('Dummy1', False)
         self.player2 = Guerreiro('Dummy1', True)
+
+        self.dmg_atacante = 0
+        self.dmg_defensor = 0
         
         
         #teste da ui
@@ -77,14 +80,50 @@ class Jogo:
             
 
         elif state == 'Ataque Especial':
-            pass
+            self.apply_atk(data1,data2)
+            self.change_turn()
         
-        elif self.state == 'Desviar':
+        elif state == 'Desviar':
             pass
 
-        elif self.state == 'Ataque Básico':
-            pass
+        elif state == 'Ataque Básico':
+            self.apply_atk(data1,data2)
+            self.change_turn()
         
+     def apply_atk(self,skill,defensor):
+        if skill != 'atk_basico':
+            dmg = Ataques[skill]['Damage']
+            mp = Ataques[skill]['Mp']
+            print(f"Mp antes: {self.uip1.atacante.Mp}")
+            self.uip1.atacante.Mp -=mp
+        else:
+            dmg = self.uip1.atacante.ataque()
+        if self.Turn == 'atacante':
+            self.dmg_atacante = dmg
+        else:
+            self.dmg_defensor = dmg
+        print(f"Hp antes: {defensor.Hp}")
+        #defensor.damage_cal(dmg)
+        print(f"Hp depois: {defensor.Hp}")
+        print(f"Mp depois: {self.uip1.atacante.Mp}")
+         
+     def change_turn(self):
+        self.uip1.atacante.kill()
+        self.uip1.defensor.kill()
+
+        self.uip1.atacante, self.uip1.defensor = self.uip1.defensor, self.uip1.atacante
+
+        self.uip1.atacante.p2 = False
+        self.uip1.atacante.check_p2()
+        self.uip1.defensor.p2 = True
+        self.uip1.defensor.check_p2()
+
+        self.all_sprites.add(self.uip1.atacante)
+        self.all_sprites.add(self.uip1.defensor)
+
+        if self.Turn == 'atacante': self.Turn = 'defensor'
+        else: self.Turn = 'atacante'
+
 
      def run(self):
         while self.running:

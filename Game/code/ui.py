@@ -65,14 +65,17 @@ class UI:
             
             self.ataque_index['row'] = (self.ataque_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_ataque)
             if keys[pygame.K_SPACE]:
+                self.get_input(self.state,self.nome_ataque[self.ataque_index['row']],self.defensor)
                 print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
-                
+                self.state = 'Principal'
+
 
         elif self.state == 'Desviar':
             pass
 
         elif self.state == 'Ataque Básico':
-            pass
+            self.get_input(self.state,'atk_basico',self.defensor)
+            self.state = 'Principal'
 
     def menu(self,index,options):
         #background do menu
