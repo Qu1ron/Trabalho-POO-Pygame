@@ -1,13 +1,21 @@
 from settings import *
 import os
+from classes import *
 
 class UI:
-    def __init__ (self,player,get_input):
+    def __init__ (self,player1,player2,get_input):
+
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 24) # Para ficar com a fonte bonitinha
         self.left = WINDOW_WIDTH/2
         self.top = WINDOW_HEIGHT/2 + 50
-        self.player = player
+
+        self.player1 = player1
+        self.player2 = player2
+        self.atacante = None
+        self.defensor = None
+        self.player_choice = 'P1'
+
         self.get_input = get_input
 
         self.state = 'Escolha'
@@ -22,39 +30,55 @@ class UI:
         self.geral_index = {'row':0}
         self.ataque_index = {'row':0}
 
+
+    def get_skills(self,player):
         for nome, detalhes in Ataques.items():
-            if detalhes['Classe'] == self.player.classe:
+            if detalhes['Classe'] == player.classe:
                 self.nome_ataque.append(nome)
                 texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
                 self.options_ataque.append(texto_formatado)
 
-        
-
     def input(self):
+        
         keys = pygame.key.get_just_pressed()
         if self.state == 'Escolha':
+            
             self.escolha_index['row'] = (self.escolha_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_escolha)
             if keys[pygame.K_SPACE]:
                 self.classe = self.options_escolha[self.escolha_index['row']]
-                print(f"Classe {self.options_escolha[self.escolha_index['row']]}")
-                self.state = 'Principal'
+                
+                self.get_input(self.state,self.classe,self.player_choice)
 
+                if self.player_choice == 'P2':
+                    self.state = 'Principal'
+
+                if self.player_choice == 'P1':
+                    self.player_choice = 'P2'
+                    self.state = 'Escolha'
+                
+                
         elif self.state == 'Principal':
             self.geral_index['row'] = (self.geral_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_geral)
             if keys[pygame.K_SPACE]:
+                self.get_input(self.state)
                 self.state = self.options_geral[self.geral_index['row']]
                 print(f"Opções {self.options_geral[self.geral_index['row']]}")
 
         elif self.state == 'Ataque Especial':
+            
             self.ataque_index['row'] = (self.ataque_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_ataque)
             if keys[pygame.K_SPACE]:
+                self.get_input(self.state,self.nome_ataque[self.ataque_index['row']],self.defensor)
                 print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
+                self.state = 'Principal'
+
 
         elif self.state == 'Desviar':
             pass
 
         elif self.state == 'Ataque Básico':
-            pass
+            self.get_input(self.state,'atk_basico',self.defensor)
+            self.state = 'Principal'
 
     def menu(self,index,options):
         #background do menu
@@ -81,8 +105,14 @@ class UI:
 
     def draw(self):
         match self.state:
-            case 'Escolha': self.menu(self.escolha_index,self.options_escolha)
-            case 'Principal':self.menu(self.geral_index,self.options_geral)
-            case 'Ataque Especial': self.menu(self.ataque_index,self.options_ataque)
-            case 'Ataque Básico': pass 
-            case 'Desviar': pass 
+            case 'Escolha': 
+                self.menu(self.escolha_index,self.options_escolha)
+            case 'Principal':
+                self.menu(self.geral_index,self.options_geral)
+            case 'Ataque Especial':
+                
+                self.menu(self.ataque_index,self.options_ataque)
+            case 'Ataque Básico': 
+                pass 
+            case 'Desviar': 
+                pass 
