@@ -17,20 +17,33 @@ class Jogo:
 
         #data
         
-        self.player1 = Mago('Quiron',SPRITES['mago'], self.all_sprites, False)
-        self.player2 = Guerreiro('Dummy', SPRITES['guerreiro'], self.all_sprites, True)
+        self.player1 = Guerreiro('Quiron', self.all_sprites, False)
+        self.player2 = Mago('Dummy', self.all_sprites, True)
 
         #teste da ui
-        player_surf = pygame.Surface((100, 100))
-        self.player1 = Guerreiro('teste',[player_surf, player_surf],self.all_sprites)
-        self.display_surface.fill('black')
+        
         
         #ui
         self.uip1 = UI(self.player1)
 
         #timers
 
+     def get_input(self, state, data):
+        if state == 'Escolha':
+            pass
+        
+        elif state == 'Principal':
+            pass
 
+        elif state == 'Ataque Especial':
+            pass
+        
+        elif self.state == 'Desviar':
+            pass
+
+        elif self.state == 'Ataque Básico':
+            pass
+        
 
      def run(self):
         while self.running:
@@ -45,10 +58,13 @@ class Jogo:
             self.uip1.update()
             
             # draw
+            self.display_surface.blit(MAPAS['floresta'], (0,0))
 
             self.all_sprites.draw(self.display_surface)
 
             self.uip1.draw()
+
+            
             
             
             pygame.display.update()

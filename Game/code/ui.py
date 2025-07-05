@@ -1,12 +1,13 @@
 from settings import *
 
 class UI:
-    def __init__ (self,player):
+    def __init__ (self,player,get_input):
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font(None,30)
         self.left = WINDOW_WIDTH/2
         self.top = WINDOW_HEIGHT/2 + 50
         self.player = player
+        self.get_input = get_input
 
         self.state = 'Escolha'
 
