@@ -1,7 +1,8 @@
 from settings import *
 import os
 from classes import *
-from time import sleep
+from efeitos import SONS
+from Timer import Timer
 
 class UI:
     def __init__ (self,player1,player2,get_input):
@@ -31,6 +32,10 @@ class UI:
         self.geral_index = {'row':0}
         self.ataque_index = {'row':0}
 
+
+        SONS['clique'].set_volume(0.35)
+
+
         
 
 
@@ -48,6 +53,7 @@ class UI:
             
             self.escolha_index['row'] = (self.escolha_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_escolha)
             if keys[pygame.K_SPACE]:
+                SONS['clique'].play()
                 self.classe = self.options_escolha[self.escolha_index['row']]
                 
                 self.get_input(self.state,self.classe,self.player_choice)
@@ -63,6 +69,7 @@ class UI:
         elif self.state == 'Principal':
             self.geral_index['row'] = (self.geral_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_geral)
             if keys[pygame.K_SPACE]:
+                SONS['clique'].play()
                 self.nome_ataque =[]
                 self.options_ataque = []
                 self.get_input(self.state)
@@ -73,30 +80,29 @@ class UI:
             
             self.ataque_index['row'] = (self.ataque_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_ataque)
             if keys[pygame.K_SPACE]:
-                if self.atacante.Mp <= 0:
-                    self.atacante.Mp = 0
-                    self.state = 'Principal'
+                SONS['clique'].play()
+                
                 self.get_input(self.state,self.nome_ataque[self.ataque_index['row']])
                 print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
+                if self.state != 'Principal':
+                    self.state = 'Aguardando'
                 
-                self.state = 'Troca turno'
+                    
             if keys[pygame.K_ESCAPE]:
+                SONS['clique'].play()
                 self.state = 'Principal'
 
 
         elif self.state == 'Desviar':
             self.get_input(self.state)
-            self.state = 'Principal'
+            self.state = 'Aguardando'
+            
 
         elif self.state == 'Ataque Básico':
             self.get_input(self.state,'atk_basico')
-            self.state = 'Principal'
-
-        elif self.state == 'Troca turno':
-            sleep(1)
-            self.state = 'Principal'
-
+            self.state = 'Aguardando'
             
+
 
     def menu(self,index,options):
         #background do menu
@@ -118,7 +124,7 @@ class UI:
             self.display_surface.blit(text_surf,text_rect)
 
     def update (self):
-        
+
         self.input()
 
 

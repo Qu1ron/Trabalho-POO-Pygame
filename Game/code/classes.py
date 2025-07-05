@@ -1,4 +1,3 @@
-import pygame # Adicionar import do pygame
 from settings import *
 from efeitos import SPRITES
 
