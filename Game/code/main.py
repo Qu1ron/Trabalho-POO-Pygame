@@ -11,6 +11,7 @@ class Jogo:
         pygame.display.set_caption('RPG Realm')
         self.clock = pygame.time.Clock()
         self.running = True
+        self.prev_Turn = None
         self.Turn = 'atacante'
 
 
@@ -36,7 +37,7 @@ class Jogo:
         
 
         #timers
-        self.timers = {'atacante_end': Timer(1000, func = self.change_turn),'defesor_end': Timer(1000, func = self.change_turn)}
+        self.timer_tend = Timer(1000, func = self.change_turn)
 
 
      def get_input(self, state, data1= None, data2 = None):
@@ -82,14 +83,14 @@ class Jogo:
 
         elif state == 'Ataque Especial':
             self.apply_atk(data1,data2)
-            self.change_turn()
+            self.timer_tend.activate()
         
         elif state == 'Desviar':
             pass
           
         elif state == 'Ataque Básico':
             self.apply_atk(data1,data2)
-            self.change_turn()
+            self.timer_tend.activate()
         
      def apply_atk(self,skill,defensor):
         if skill != 'atk_basico':
@@ -122,10 +123,15 @@ class Jogo:
         self.all_sprites.add(self.uip1.atacante)
         self.all_sprites.add(self.uip1.defensor)
 
+        self.prev_Turn = self.Turn
         if self.Turn == 'atacante': self.Turn = 'defensor'
         else: self.Turn = 'atacante'
         
-
+     def turn_result(self):
+        
+        
+        pass 
+     
      def run(self):
         while self.running:
             dt = self.clock.tick() / 1000
@@ -134,7 +140,7 @@ class Jogo:
                     self.running = False
 
             # update
-
+            self.timer_tend.update()
             self.all_sprites.update(dt)
             self.uip1.update()
             
