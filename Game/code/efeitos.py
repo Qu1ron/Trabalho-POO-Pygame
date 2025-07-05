@@ -67,7 +67,7 @@ SONS = {
     'clique': carregar_som('clique.wav'),
 }
 
-FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'fonte_pixel.ttf'), 36)
+FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 36)
 
 
 def tocar_musicas_por_mapa(nome_mapa):
