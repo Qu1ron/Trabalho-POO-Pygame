@@ -28,15 +28,15 @@ def carregar_som(nome_arquivo):
 SPRITES = {
     'mago': {
        'frente': carregar_imagem('mago_frente.png', (150, 150)),
-       'costas': carregar_imagem('mago_costas.png', (150, 150))
+       'costas': carregar_imagem('mago_costas.png', (300, 300))
     },
     'guerreiro': {
        'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
-       'costas': carregar_imagem('guerreiro_costas.png', (150, 150))
+       'costas': carregar_imagem('guerreiro_costas.png', (300, 300))
     },
     'arqueiro': {
        'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
-       'costas': carregar_imagem('arqueiro_costas.png', (150, 150))
+       'costas': carregar_imagem('arqueiro_costas.png', (300, 300))
     },
 }
 
@@ -67,7 +67,7 @@ SONS = {
     'clique': carregar_som('clique.wav'),
 }
 
-FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'fonte_pixel.ttf'), 36)
+FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 36)
 
 
 def tocar_musicas_por_mapa(nome_mapa):

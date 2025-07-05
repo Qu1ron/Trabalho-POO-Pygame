@@ -1,4 +1,5 @@
 from settings import *
+from efeitos import SPRITES
 
 # Nesse arquivo temos as classes
 
@@ -13,6 +14,11 @@ class Personagem:
         self.Mp = Mp 
         self.Defense = Defense
         self.Speed = Speed
+
+
+        #para ui
+        #self.image = self.perso_surfs[0]
+        #self.rect = self.image.get_frect(bottomleft = (100,WINDOW_WIDTH))
     
         #Funcao pro ataque basico
     def ataque(self):
@@ -44,14 +50,20 @@ class Personagem:
             return False
                
 class Mago(pygame.sprite.Sprite, Personagem):
-    def __init__(self, name, personagem_sprites, groups, p2, MaxHp = 180, Hp = 180, MaxMp = 200, Mp = 200, Defense = 15, Speed = 10, skills = Ataques):
+    def __init__(self, name, groups, p2, MaxHp = 180, Hp = 180, MaxMp = 200, Mp = 200, Defense = 15, Speed = 10, skills = Ataques):
         super().__init__(groups)
+        self.classe = 'Mago'
+        
         self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
-        self.image = personagem_sprites['placeholder']
+        
         if not p2:
-            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+            self.image = SPRITES['mago']['costas']
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH * 0.25, WINDOW_HEIGHT - 50))
         else:
-            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
+            self.image = SPRITES['mago']['frente']
+            self.rect = self.image.get_frect(midtop = (WINDOW_WIDTH * 0.75, WINDOW_HEIGHT * 0.2))
+
+         
 
         #pra cada nome e detalhe no dicionario Ataques, se detalhe = 'Mago' agente copia todos os detalhes da skill com esse nome
         self.skills_mago = {}
@@ -69,14 +81,18 @@ class Mago(pygame.sprite.Sprite, Personagem):
         return int(self.dmg)
     
 class Guerreiro(pygame.sprite.Sprite, Personagem):
-    def __init__(self, name, personagem_sprites, groups, p2, MaxHp = 250, Hp = 250, MaxMp = 100, Mp = 100, Defense = 40, Speed = 7, skills = Ataques):
+    def __init__(self, name, groups, p2, MaxHp = 250, Hp = 250, MaxMp = 100, Mp = 100, Defense = 40, Speed = 7, skills = Ataques):
         super().__init__(groups)
+        self.classe = 'Guerreiro'
+
         self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
-        self.image = personagem_sprites['placeholder']
+        
         if not p2:
-            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+            self.image = SPRITES['guerreiro']['costas']
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH * 0.25, WINDOW_HEIGHT - 50))
         else:
-            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
+            self.image = SPRITES['guerreiro']['frente']
+            self.rect = self.image.get_frect(midtop = (WINDOW_WIDTH * 0.75, WINDOW_HEIGHT * 0.2))
 
 
 
@@ -95,15 +111,18 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         return int(self.dmg)
         
 class Arqueiro(pygame.sprite.Sprite, Personagem) :
-    def __init__ (self ,name, personagem_sprites, groups, p2, MaxHp = 200 ,Hp = 200 ,MaxMp = 150 ,Mp = 150 ,Defense = 25 ,Speed = 16 ,skills = Ataques) :
+    def __init__ (self ,name, groups, p2, MaxHp = 200 ,Hp = 200 ,MaxMp = 150 ,Mp = 150 ,Defense = 25 ,Speed = 16 ,skills = Ataques) :
         super().__init__(groups)
-        self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
-        self.image = personagem_sprites['placeholder']
-        if not p2:
-            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
-        else:
-            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
+        self.classe = 'Arqueiro'
 
+        self.get_data(name,MaxHp,Hp,MaxMp,Mp,Defense,Speed)
+        
+        if not p2:
+            self.image = SPRITES['arqueiro']['costas']
+            self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH * 0.25, WINDOW_HEIGHT - 50))
+        else:
+            self.image = SPRITES['arqueiro']['frente']
+            self.rect = self.image.get_frect(midtop = (WINDOW_WIDTH * 0.75, WINDOW_HEIGHT * 0.2))
         
         self.skills_arqueiro = {}
         for nome ,detalhe in skills.items():
@@ -117,4 +136,4 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
         else:
             print("Perdeu o foco! Um simples arranhão ")
             self.dmg = super().ataque()
-        return self.dmg
+        return int(self.dmg)
