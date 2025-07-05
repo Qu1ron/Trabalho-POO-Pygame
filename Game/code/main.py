@@ -19,9 +19,6 @@ class Jogo:
         
         self.player1 = Guerreiro('Quiron', self.all_sprites, False)
         self.player2 = Mago('Dummy', self.all_sprites, True)
-
-        #teste da ui
-        
         
         #ui
         self.uip1 = UI(self.player1, self.get_input)
@@ -63,8 +60,6 @@ class Jogo:
             self.all_sprites.draw(self.display_surface)
 
             self.uip1.draw()
-
-            
             
             
             pygame.display.update()
