@@ -1,1 +1,1 @@
-os.path.dirname(__file__), 
+rect

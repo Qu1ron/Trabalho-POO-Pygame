@@ -1,6 +1,6 @@
 from settings import *
 from efeitos import *
-from ui import UI
+from ui import *
 from classes import *
 
 class Jogo:
@@ -16,21 +16,38 @@ class Jogo:
         self.all_sprites = pygame.sprite.Group()
 
         #data
+        self.player1 = Mago('Dummy1', self.all_sprites, False)
+        self.player1.kill()
+        self.player2 = Guerreiro('Dummy1', self.all_sprites, True)
         
-        self.player1 = Guerreiro('Quiron', self.all_sprites, False)
-        self.player2 = Mago('Dummy', self.all_sprites, True)
-
         #teste da ui
         
         
         #ui
-        self.uip1 = UI(self.player1)
+        self.uip1 = UI(self.player1, self.get_input)
 
         #timers
 
-     def get_input(self, state, data):
+
+     def get_input(self, state, data1, data2 = None):
         if state == 'Escolha':
-            pass
+            if data2 == 'P1':
+                if data1 == 'Mago':
+                    self.player1 = Mago('Dummy1', self.all_sprites, False)
+                if data1 == 'Guerreiro':
+                    self.player1 = Guerreiro('Dummy1', self.all_sprites, False)
+                if data1 == 'Arqueiro':
+                    self.player1 = Arqueiro('Dummy1', self.all_sprites, False)
+            self.uip1.player = self.player1
+            
+                
+            if data2 == 'P2':
+                if data1 == 'Mago':
+                    self.player2 = Mago('Dummy2', self.all_sprites, True)
+                if data1 == 'Guerreiro':
+                    self.player2 = Guerreiro('Dummy2', self.all_sprites, True)
+                if data1 == 'Arqueiro':
+                    self.player2 = Arqueiro('Dummy2', self.all_sprites, True)
         
         elif state == 'Principal':
             pass
@@ -59,10 +76,10 @@ class Jogo:
             
             # draw
             self.display_surface.blit(MAPAS['floresta'], (0,0))
-
+            self.uip1.draw()
             self.all_sprites.draw(self.display_surface)
 
-            self.uip1.draw()
+            
 
             
             

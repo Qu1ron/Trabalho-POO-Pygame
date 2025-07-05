@@ -1,4 +1,5 @@
 from settings import *
+from classes import *
 
 class UI:
     def __init__ (self,player,get_input):
@@ -21,13 +22,14 @@ class UI:
         self.geral_index = {'row':0}
         self.ataque_index = {'row':0}
 
+        
+
+    def get_skills(self):
         for nome, detalhes in Ataques.items():
             if detalhes['Classe'] == self.player.classe:
                 self.nome_ataque.append(nome)
                 texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
                 self.options_ataque.append(texto_formatado)
-
-        
 
     def input(self):
         keys = pygame.key.get_just_pressed()
@@ -35,7 +37,11 @@ class UI:
             self.escolha_index['row'] = (self.escolha_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.options_escolha)
             if keys[pygame.K_SPACE]:
                 self.classe = self.options_escolha[self.escolha_index['row']]
-                print(f"Classe {self.options_escolha[self.escolha_index['row']]}")
+
+                self.get_input(self.state,self.classe,'P1')
+                self.get_skills()
+                
+                
                 self.state = 'Principal'
 
         elif self.state == 'Principal':
@@ -85,3 +91,4 @@ class UI:
             case 'Ataque Especial': self.menu(self.ataque_index,self.options_ataque)
             case 'Ataque Básico': pass 
             case 'Desviar': pass 
+

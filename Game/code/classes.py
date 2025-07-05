@@ -66,10 +66,10 @@ class Mago(pygame.sprite.Sprite, Personagem):
          
 
         #pra cada nome e detalhe no dicionario Ataques, se detalhe = 'Mago' agente copia todos os detalhes da skill com esse nome
-        self.skills_mago = {}
+        self.skills = {}
         for nome, detalhe in skills.items(): 
             if detalhe['Classe'] == 'Mago':
-                self.skills_mago[nome] = detalhe
+                self.skills[nome] = detalhe
     
     def ataque(self):
         if self.Mp >=8:
@@ -96,10 +96,10 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
 
 
 
-        self.skills_guerreiro = {}
+        self.skills = {}
         for nome, detalhe in skills.items():
             if detalhe['Classe'] == 'Guerreiro':
-                self.skills_guerreiro[nome] = detalhe
+                self.skills[nome] = detalhe
         
     def ataque(self):
         if self.Mp >= 10:
@@ -124,10 +124,10 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
             self.image = SPRITES['arqueiro']['frente']
             self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
         
-        self.skills_arqueiro = {}
+        self.skills = {}
         for nome ,detalhe in skills.items():
             if detalhe ['Classe'] == 'Arqueiro' :
-                self.skills_arqueiro[nome] = detalhe
+                self.skills[nome] = detalhe
                     
     def ataque (self ):
         if self.Mp >= 12:
