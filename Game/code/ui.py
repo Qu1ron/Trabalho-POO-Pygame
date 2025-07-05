@@ -1,10 +1,12 @@
 from settings import *
+import os
 from classes import *
 
 class UI:
     def __init__ (self,player1,player2,get_input):
+
         self.display_surface = pygame.display.get_surface()
-        self.font = pygame.font.Font(None,30)
+        self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 24) # Para ficar com a fonte bonitinha
         self.left = WINDOW_WIDTH/2
         self.top = WINDOW_HEIGHT/2 + 50
 
@@ -13,6 +15,7 @@ class UI:
         self.atacante = None
         self.defensor = None
         self.player_choice = 'P1'
+
         self.get_input = get_input
 
         self.state = 'Escolha'

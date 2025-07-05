@@ -20,6 +20,7 @@ class Jogo:
         self.group_p2 = pygame.sprite.Group()
 
         #data
+
         self.player1 = Mago('Dummy1', False)
         self.player2 = Guerreiro('Dummy1', True)
 
@@ -85,7 +86,7 @@ class Jogo:
         
         elif state == 'Desviar':
             pass
-
+          
         elif state == 'Ataque Básico':
             self.apply_atk(data1,data2)
             self.change_turn()
@@ -123,7 +124,7 @@ class Jogo:
 
         if self.Turn == 'atacante': self.Turn = 'defensor'
         else: self.Turn = 'atacante'
-
+        
 
      def run(self):
         while self.running:
@@ -139,7 +140,9 @@ class Jogo:
             
             # draw
             self.display_surface.blit(MAPAS['floresta'], (0,0))
+
             self.uip1.draw()
+
             self.all_sprites.draw(self.display_surface)
 
             
