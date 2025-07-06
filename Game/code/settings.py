@@ -12,7 +12,8 @@ COLORS = {
     'red': '#ee1a0f',
     'gray': 'gray',
     'white': '#ffffff',
-    'blue': '#0373fc'
+    'blue': '#0373fc',
+    'green' : '#3eeb17'
 }
 
 

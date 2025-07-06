@@ -3,6 +3,10 @@ from efeitos import *
 from ui import *
 from classes import *
 from Timer import Timer
+from log import *
+
+log_obj = Log("battle_log.txt")
+sys.stdout = log_obj
 
 class Jogo:
      def __init__(self):
@@ -227,23 +231,17 @@ class Jogo:
             
             # draw
             self.display_surface.blit(MAPAS['floresta'], (0,0))
-
             self.uip1.draw()
-
             self.all_sprites.draw(self.display_surface)
-
-            
-
-            
-            
             
             pygame.display.update()
 
-
         pygame.quit()
+        log_obj.fechar()
 
 
 
 if __name__ == '__main__':
     jogo = Jogo()
     jogo.run()
+
