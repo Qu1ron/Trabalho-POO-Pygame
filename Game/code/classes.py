@@ -139,7 +139,7 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
     def check_p2(self):
         if not self.p2:
             self.image = SPRITES['guerreiro']['costas']
-            self.rect = self.image.get_frect(bottomleft = (300,WINDOW_HEIGHT-100))
+            self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT-100))
             
         else:
             self.image = SPRITES['guerreiro']['frente']

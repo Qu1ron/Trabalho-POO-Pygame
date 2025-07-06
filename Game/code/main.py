@@ -35,7 +35,6 @@ class Jogo:
         
         #ui
         self.uip1 = UI(self.player1, self.player2, self.get_input)
-        
 
         #timers
         self.timer_tend = Timer(1000, func = self.change_turn)
