@@ -4,7 +4,7 @@ from efeitos import SPRITES
 
 # Nesse arquivo temos as classes
 
-class Personagem:
+class Personagem():
     # Funcao para inicializar as variaveis
     def get_data(self, name, MaxHp, Hp, MaxMp, Mp, Defense, Speed):
         # Salvar os valores em variaveis:
@@ -16,8 +16,36 @@ class Personagem:
         self.Defense = Defense
         self.Speed = Speed
 
-        # Removido: self.image e self.rect devem ser definidos nas classes filhas
-        # Removido: self.perso_surfs não é definido aqui
+        #Variaveis para detectar se tomar dano
+        self.piscando = False
+        self.pisca_start = 0
+        self.pisca_dur = 400 
+        self.pisca_intervalo = 100 
+        self.original_image = None 
+
+    def tomou_dano(self):
+        self.piscando = True
+        self.pisca_start = pygame.time.get_ticks()
+
+    
+
+    def pisca_effect(self):
+        current_time = pygame.time.get_ticks()
+        tempo = current_time - self.pisca_start
+
+        if tempo > self.pisca_dur:
+            self.piscando = False
+            self.image = self.original_image 
+            return
+
+        
+        is_visible = (tempo // self.pisca_intervalo) % 2 == 0
+
+        if is_visible:
+            self.image = self.original_image
+        else:
+            # Cria uma surface vazia e transparente do mesmo tamanho para o efeito de tar piscando
+            self.image = pygame.Surface(self.original_image.get_size(), pygame.SRCALPHA)
 
     def ataque(self):
         self.dmg = 10
@@ -71,9 +99,15 @@ class Mago(pygame.sprite.Sprite, Personagem):
         if not self.p2:
             self.image = SPRITES['mago']['costas']
             self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+            
         else:
             self.image = SPRITES['mago']['frente']
             self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-300, 350))
+        self.original_image = self.image.copy()
+
+    def update(self, dt): 
+        if self.piscando:
+            self.pisca_effect()
     
     def ataque(self):
         if self.Mp >=8:
@@ -95,6 +129,7 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         self.image = None
         self.rect = None
         self.check_p2()
+        self.original_image = self.image.copy()
 
         self.skills = {}
         for nome, detalhe in skills.items():
@@ -105,9 +140,15 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         if not self.p2:
             self.image = SPRITES['guerreiro']['costas']
             self.rect = self.image.get_frect(bottomleft = (300,WINDOW_HEIGHT-100))
+            
         else:
             self.image = SPRITES['guerreiro']['frente']
             self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-100, 300))
+        self.original_image = self.image.copy()
+
+    def update(self, dt): 
+        if self.piscando:
+            self.pisca_effect()
         
     def ataque(self):
         if self.Mp >= 10:
@@ -129,6 +170,7 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
         self.image = None
         self.rect = None
         self.check_p2()
+        self.original_image = self.image.copy()
 
         self.skills = {}
         for nome ,detalhe in skills.items():
@@ -139,9 +181,11 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
         if not self.p2:
             self.image = SPRITES['arqueiro']['costas']
             self.rect = self.image.get_frect(bottomleft = (100,WINDOW_HEIGHT))
+            
         else:
             self.image = SPRITES['arqueiro']['frente']
             self.rect = self.image.get_frect(midbottom = (WINDOW_WIDTH-250, 300))
+        self.original_image = self.image.copy()
                     
     def ataque (self ):
         if self.Mp >= 12:

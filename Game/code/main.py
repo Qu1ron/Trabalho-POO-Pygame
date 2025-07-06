@@ -30,7 +30,7 @@ class Jogo:
         self.desvio_p1 = False
         self.desvio_p2 = False
         
-        
+        self.tempo_glow = 400
         
         
         #ui
@@ -40,7 +40,6 @@ class Jogo:
         #timers
         self.timer_tend = Timer(1000, func = self.change_turn)
         self.timer_tres = Timer(1000, func = self.turn_result)
-        self.timer_tres_extra = Timer(1000)
         
 
 
@@ -168,13 +167,14 @@ class Jogo:
 
         if self.dmg_p1 != 0 and not self.desvio_p2:
             SONS['dano'].play()
-            efeito_mudar_cor(self.uip1.defensor.image,COLORS['red'],pygame.time.get_ticks())
+            self.uip1.defensor.tomou_dano()
+            
         
-        sleep(1)
+        #sleep(1)
 
         if self.dmg_p2 != 0 and not self.desvio_p1:
             SONS['dano'].play()
-            efeito_mudar_cor(self.uip1.atacante.image,COLORS['red'],pygame.time.get_ticks())
+            self.uip1.atacante.tomou_dano()
         
         print(f"Hp player 1 depois: {self.uip1.atacante.Hp}")
         print(f"Hp player 2 depois: {self.uip1.defensor.Hp}\n")
@@ -225,7 +225,6 @@ class Jogo:
             self.timer_tres.update()
             self.all_sprites.update(dt)
             self.uip1.update()
-            self.timer_tres_extra.update()
             
             # draw
             self.display_surface.blit(MAPAS['floresta'], (0,0))
