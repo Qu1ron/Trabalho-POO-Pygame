@@ -1,6 +1,5 @@
 import pygame
-from os.path import join 
-from os import walk
+import os
 from random import choice, randint
 from time import sleep
 from pygame.math import Vector2

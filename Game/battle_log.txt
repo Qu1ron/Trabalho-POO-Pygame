@@ -3,9 +3,9 @@ Guerreiro
 Opções Ataque Especial
 Mp antes: 200
 
-Mp depois: 155
+Mp depois: 180
 
-Player P1 escolheu Hydro Pump | Mana: 45 | Dano: 70 
+Player P1 escolheu Fireball | Mana: 20 | Dano: 45 
 Opções Ataque Especial
 Mp antes: 100
 
@@ -16,72 +16,8 @@ Hp player 1 antes: 180
 Hp player 2 antes: 250
 
 Hp player 1 depois: 112.5
-Hp player 2 depois: 200.0
+Hp player 2 depois: 225.0
 
-
-Recuperando mana...
-
-Opções Ataque Especial
-Mp antes: 175
-
-Mp depois: 130
-
-Player P1 escolheu Hydro Pump | Mana: 45 | Dano: 70 
-Opções Ataque Especial
-Mp antes: 55
-
-Mp depois: 30
-
-Player P2 escolheu Last Bastion | Mana: 25 | Dano: 50 
-Hp player 1 antes: 112.5
-Hp player 2 antes: 200.0
-
-Hp player 1 depois: 70.0
-Hp player 2 depois: 150.0
-
-
-Recuperando mana...
-
-Opções Ataque Especial
-Mp antes: 150
-
-Mp depois: 120
-
-Player P1 escolheu Ice Spike | Mana: 30 | Dano: 55 
-Opções Ataque Especial
-Mp antes: 35
-
-Mp depois: 10
-
-Player P2 escolheu Last Bastion | Mana: 25 | Dano: 50 
-Hp player 1 antes: 70.0
-Hp player 2 antes: 150.0
-
-Hp player 1 depois: 27.5
-Hp player 2 depois: 115.0
-
-
-Recuperando mana...
-
-Opções Ataque Especial
-Mp antes: 140
-
-Mp depois: 95
-
-Player P1 escolheu Hydro Pump | Mana: 45 | Dano: 70 
-Opções Ataque Especial
-Mp antes: 15
-
-Mp depois: 0
-
-Player P2 escolheu Slash | Mana: 15 | Dano: 40 
-Hp player 1 antes: 27.5
-Hp player 2 antes: 115.0
-
-Hp player 1 depois: -5.0
-Hp player 2 depois: 65.0
-
-Player 2 Ganhou!
 
 Recuperando mana...
 
