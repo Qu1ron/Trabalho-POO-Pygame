@@ -174,22 +174,25 @@ class UI:
         pygame.draw.rect(self.display_surface,COLORS['gray'],barra_vida2)
         pygame.draw.rect(self.display_surface,COLORS['gray'],barra_mana2)
 
-        self.barra(barra_vida1,self.player1.Hp,self.player1.MaxHp)
-        self.barra(barra_mana1,self.player1.Mp,self.player1.MaxMp)
+        tipo_hp = 'hp'
+        tipo_mp = 'mp'
 
-        self.barra(barra_vida2,self.player2.Hp,self.player2.MaxHp)
-        self.barra(barra_mana2,self.player2.Mp,self.player2.MaxMp)
+        self.barra(barra_vida1,self.player1.Hp,self.player1.MaxHp,tipo_hp)
+        self.barra(barra_mana1,self.player1.Mp,self.player1.MaxMp,tipo_mp)
 
-    def barra(self, rect, valor, valor_max):
+        self.barra(barra_vida2,self.player2.Hp,self.player2.MaxHp,tipo_hp)
+        self.barra(barra_mana2,self.player2.Mp,self.player2.MaxMp,tipo_mp)
+
+    def barra(self, rect, valor, valor_max,tipo):
         prop = rect.width / valor_max
         self.font_pequena = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 13)
         barra = pygame.FRect(rect.topleft, ( valor*prop,rect.height))
-        if valor == self.player1.Hp or valor == self.player2.Hp:
+        if tipo == 'hp':
             if valor >= valor_max/2 :
                 color = COLORS['green']
             elif valor < valor_max/2 :
                 color = COLORS['red']
-        else:
+        elif tipo == 'mp':
             color = COLORS['blue']
 
         pygame.draw.rect(self.display_surface,color,barra)
