@@ -21,6 +21,7 @@ class Personagem():
         self.pisca_start = 0
         self.pisca_dur = 400 
         self.pisca_intervalo = 100 
+        
         self.original_image = None
 
         self.mudar_cor = False
@@ -29,11 +30,13 @@ class Personagem():
         self.cor_efeito = (255, 0, 0, 100)
         
 
+
     def tomou_dano(self):
         self.piscando = True
         self.pisca_start = pygame.time.get_ticks()
         self.mudar_cor = True
         self.cor_start = pygame.time.get_ticks()
+
 
     
 
@@ -55,6 +58,7 @@ class Personagem():
             # Cria uma surface vazia e transparente do mesmo tamanho para o efeito de tar piscando
             self.image = pygame.Surface(self.original_image.get_size(), pygame.SRCALPHA)
 
+
     def cor_effect(self):
         current_time = pygame.time.get_ticks()
         tempo = current_time - self.cor_start
@@ -68,6 +72,7 @@ class Personagem():
         superficie_cor.fill(self.cor_efeito)
         temp_image.blit(superficie_cor, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         return temp_image
+
 
     def ataque(self):
         self.dmg = 10
@@ -128,12 +133,13 @@ class Mago(pygame.sprite.Sprite, Personagem):
         self.original_image = self.image.copy()
 
     def update(self, dt): 
+
         if self.mudar_cor:
             self.image = self.cor_effect()
         elif self.piscando:
             self.pisca_effect()
         else: # Se nenhum efeito estiver ativo, garante que a imagem seja a original
-            self.image = self.original_image
+            self.image = self.original_image   
     
     def ataque(self):
         if self.Mp >=8:
@@ -173,12 +179,15 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         self.original_image = self.image.copy()
 
     def update(self, dt): 
+
         if self.mudar_cor:
             self.image = self.cor_effect()
         elif self.piscando:
             self.pisca_effect()
         else: # Se nenhum efeito estiver ativo, garante que a imagem seja a original
             self.image = self.original_image
+
+
         
     def ataque(self):
         if self.Mp >= 10:
