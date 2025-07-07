@@ -50,11 +50,14 @@ class UI:
             if keys[pygame.K_SPACE]:
                 SONS['clique'].play()
                 self.classe = self.options_escolha[self.escolha_index['row']]
+                print(self.classe)
                 
                 self.get_input(self.state,self.classe,self.player_choice)
 
                 if self.player_choice == 'P2':
                     self.player_ident = 'P1'
+                    if self.player2.Speed > self.player1.Speed:
+                        self.player1,self.player2 =self.player2,self.player1
                     self.state = 'Principal'
 
                 if self.player_choice == 'P1':
@@ -80,7 +83,7 @@ class UI:
                 SONS['clique'].play()
                 
                 self.get_input(self.state,self.nome_ataque[self.ataque_index['row']])
-                print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
+                print(f"Player {self.player_ident} escolheu {self.options_ataque[self.ataque_index['row']]} ")
                 if self.state != 'Principal':
                     self.state = 'Aguardando'
                     if self.player_ident == 'P1':
@@ -96,6 +99,7 @@ class UI:
 
 
         elif self.state == 'Desviar':
+            print(f'{self.player_ident} irá tentar desviar')
             self.get_input(self.state)
             self.state = 'Aguardando'
             if self.player_ident == 'P1':
@@ -105,6 +109,7 @@ class UI:
             
 
         elif self.state == 'Ataque Básico':
+            print(f'{self.player_ident} escolheu ataque básico')
             self.get_input(self.state,'atk_basico')
             self.state = 'Aguardando'
             if self.player_ident == 'P1':
@@ -169,19 +174,27 @@ class UI:
         pygame.draw.rect(self.display_surface,COLORS['gray'],barra_vida2)
         pygame.draw.rect(self.display_surface,COLORS['gray'],barra_mana2)
 
-        self.barra(barra_vida1,self.player1.Hp,self.player1.MaxHp)
-        self.barra(barra_mana1,self.player1.Mp,self.player1.MaxMp)
-        self.barra(barra_vida2,self.player2.Hp,self.player2.MaxHp)
-        self.barra(barra_mana2,self.player2.Mp,self.player2.MaxMp)
+        tipo_hp = 'hp'
+        tipo_mp = 'mp'
 
-    def barra(self, rect, valor, valor_max):
+        self.barra(barra_vida1,self.player1.Hp,self.player1.MaxHp,tipo_hp)
+        self.barra(barra_mana1,self.player1.Mp,self.player1.MaxMp,tipo_mp)
+
+        self.barra(barra_vida2,self.player2.Hp,self.player2.MaxHp,tipo_hp)
+        self.barra(barra_mana2,self.player2.Mp,self.player2.MaxMp,tipo_mp)
+
+    def barra(self, rect, valor, valor_max,tipo):
         prop = rect.width / valor_max
         self.font_pequena = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 13)
         barra = pygame.FRect(rect.topleft, ( valor*prop,rect.height))
-        if valor_max == self.player1.MaxHp or valor_max == self.player2.MaxHp:
-            color = COLORS['red']
-        else:
+        if tipo == 'hp':
+            if valor >= valor_max/2 :
+                color = COLORS['green']
+            elif valor < valor_max/2 :
+                color = COLORS['red']
+        elif tipo == 'mp':
             color = COLORS['blue']
+
         pygame.draw.rect(self.display_surface,color,barra)
 
         texto = self.font_pequena.render(f'{valor} / {valor_max}',True,'black')
