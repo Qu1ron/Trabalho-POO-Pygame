@@ -2,14 +2,21 @@ import pygame
 from os.path import join 
 from os import walk
 from random import choice, randint
+from time import sleep
+from pygame.math import Vector2
+import os
 
-WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
+WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 COLORS = {
     'black': '#000000',
     'red': '#ee1a0f',
     'gray': 'gray',
     'white': '#ffffff',
+    'blue': '#0373fc',
+    'green' : '#3eeb17'
 }
 
 
