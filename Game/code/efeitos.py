@@ -49,13 +49,9 @@ MAPAS = {
 MUSICAS = {
     'floresta': [
         os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_floresta1.mp3'), 
-        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_floresta2.mp3')
-    ],
-    'floresta': [
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_floresta2.mp3'),
         os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_castelo1.wav'), 
-        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_castelo2.mp3')
-    ],
-    'floresta': [
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_castelo2.mp3'),
         os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_caverna1.mp3'),
         os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_caverna2.wav')
     ]

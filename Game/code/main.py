@@ -81,10 +81,9 @@ class Jogo:
 
                 self.all_sprites.add(self.uip1.atacante)
                 self.all_sprites.add(self.uip1.defensor)
-                self.mapa_atual_nome = 'floresta'
 
+                self.mapa_atual_nome = 'floresta'
                 tocar_musicas_por_mapa(self.mapa_atual_nome)
-                
 
         elif state == 'Principal':
             self.uip1.get_skills(self.uip1.atacante)
