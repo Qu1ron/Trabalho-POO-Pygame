@@ -182,11 +182,11 @@ class Jogo:
         print(f"Hp player 1 depois: {self.uip1.atacante.Hp}")
         print(f"Hp player 2 depois: {self.uip1.defensor.Hp}\n")
         
-        if not self.uip1.atacante.survived():
+        if not self.uip1.atacante.survived() and self.uip1.defensor.survived():
             print("Player 2 Ganhou!")
             self.running = False
 
-        if not self.uip1.defensor.survived():
+        if not self.uip1.defensor.survived() and self.uip1.atacante.survived():
             print("Player 1 Ganhou!")
             self.running = False
 
