@@ -1,0 +1,23 @@
+Mago
+Guerreiro
+Opções Ataque Especial
+Mp antes: 200
+
+Mp depois: 180
+
+Player P1 escolheu Fireball | Mana: 20 | Dano: 45 
+Opções Ataque Especial
+Mp antes: 100
+
+Mp depois: 50
+
+Player P2 escolheu Golpe Demolidor | Mana: 50 | Dano: 75 
+Hp player 1 antes: 180
+Hp player 2 antes: 250
+
+Hp player 1 depois: 112.5
+Hp player 2 depois: 225.0
+
+
+Recuperando mana...
+

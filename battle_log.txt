@@ -1,0 +1,138 @@
+Guerreiro
+Arqueiro
+Opções Ataque Especial
+Mp antes: 150
+
+Mp depois: 110
+
+Player P1 escolheu Tiro Penetrante | Mana: 40 | Dano: 70 
+Opções Ataque Especial
+Mp antes: 100
+
+Mp depois: 50
+
+Player P2 escolheu Golpe Demolidor | Mana: 50 | Dano: 75 
+Hp player 1 antes: 200
+Hp player 2 antes: 250
+
+Hp player 1 depois: 137.5
+Hp player 2 depois: 200.0
+
+
+Recuperando mana...
+
+Opções Ataque Especial
+Mp antes: 122
+
+Mp depois: 92
+
+Player P1 escolheu Poison Arrow | Mana: 30 | Dano: 58 
+Opções Ataque Básico
+P2 escolheu ataque básico
+Mp depois: 45
+
+Hp player 1 antes: 137.5
+Hp player 2 antes: 200.0
+
+Hp player 1 depois: 130.0
+Hp player 2 depois: 162.0
+
+
+Recuperando mana...
+
+Opções Ataque Especial
+Mp antes: 104
+
+Mp depois: 64
+
+Player P1 escolheu Tiro Penetrante | Mana: 40 | Dano: 70 
+Opções Ataque Especial
+Mp antes: 50
+
+Mp depois: 15
+
+Player P2 escolheu Blade of Fate | Mana: 35 | Dano: 60 
+Hp player 1 antes: 130.0
+Hp player 2 antes: 162.0
+
+Hp player 1 depois: 82.5
+Hp player 2 depois: 112.0
+
+
+Recuperando mana...
+
+Opções Ataque Especial
+Mp antes: 76
+
+Mp depois: 36
+
+Player P1 escolheu Tiro Penetrante | Mana: 40 | Dano: 70 
+Opções Ataque Básico
+P2 escolheu ataque básico
+Mp depois: 10
+
+Hp player 1 antes: 82.5
+Hp player 2 antes: 112.0
+
+Hp player 1 depois: 75.0
+Hp player 2 depois: 62.0
+
+
+Recuperando mana...
+
+Opções Ataque Especial
+Mp antes: 48
+
+Mp depois: 18
+
+Player P1 escolheu Poison Arrow | Mana: 30 | Dano: 58 
+Opções Desviar
+P2 irá tentar desviar
+
+35 > 43?
+Hp player 1 antes: 75.0
+Hp player 2 antes: 62.0
+
+Hp player 1 depois: 75.0
+Hp player 2 depois: 24.0
+
+
+Recuperando mana...
+
+Opções Ataque Básico
+P1 escolheu ataque básico
+Mp depois: 18
+
+Opções Desviar
+P2 irá tentar desviar
+
+36 > 26?
+Hp player 1 antes: 75.0
+Hp player 2 antes: 24.0
+
+Hp player 1 depois: 75.0
+Hp player 2 depois: 24.0
+
+
+Recuperando mana...
+
+Opções Ataque Especial
+Mp antes: 30
+
+Mp depois: 0
+
+Player P1 escolheu Poison Arrow | Mana: 30 | Dano: 58 
+Opções Ataque Básico
+P2 escolheu ataque básico
+Mp depois: 15
+
+Hp player 1 antes: 75.0
+Hp player 2 antes: 24.0
+
+Hp player 1 depois: 67.5
+Hp player 2 depois: -14.0
+
+Player 1 Ganhou!
+
+Recuperando mana...
+
