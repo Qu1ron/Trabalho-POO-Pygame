@@ -8,15 +8,14 @@ class UI:
     def __init__ (self,player1,player2,get_input):
 
         self.display_surface = pygame.display.get_surface()
-        self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 24) # Para ficar com a fonte bonitinha
-        self.left = WINDOW_WIDTH/2
-        self.top = WINDOW_HEIGHT/2 + 50
+        self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 20) # Para ficar com a fonte bonitinha
 
         self.player1 = player1
         self.player2 = player2
         self.atacante = None
         self.defensor = None
         self.player_choice = 'P1'
+        self.player_ident = 'P1'
 
         self.get_input = get_input
 
@@ -34,10 +33,6 @@ class UI:
 
 
         SONS['clique'].set_volume(0.35)
-
-
-        
-
 
     def get_skills(self,player):
         for nome, detalhes in Ataques.items():
@@ -59,10 +54,12 @@ class UI:
                 self.get_input(self.state,self.classe,self.player_choice)
 
                 if self.player_choice == 'P2':
+                    self.player_ident = 'P1'
                     self.state = 'Principal'
 
                 if self.player_choice == 'P1':
                     self.player_choice = 'P2'
+                    self.player_ident = 'P2'
                     self.state = 'Escolha'
                 
                 
@@ -86,29 +83,40 @@ class UI:
                 print(f"Ataque {self.options_ataque[self.ataque_index['row']]}")
                 if self.state != 'Principal':
                     self.state = 'Aguardando'
+                    if self.player_ident == 'P1':
+                        self.player_ident = 'P2'
+                    elif self.player_ident == 'P2':
+                        self.player_ident = 'P1'
                 
                     
             if keys[pygame.K_ESCAPE]:
                 SONS['clique'].play()
                 self.state = 'Principal'
+                
 
 
         elif self.state == 'Desviar':
             self.get_input(self.state)
             self.state = 'Aguardando'
+            if self.player_ident == 'P1':
+                self.player_ident = 'P2'
+            elif self.player_ident == 'P2':
+                self.player_ident = 'P1'
             
 
         elif self.state == 'Ataque Básico':
             self.get_input(self.state,'atk_basico')
             self.state = 'Aguardando'
+            if self.player_ident == 'P1':
+                self.player_ident = 'P2'
+            elif self.player_ident == 'P2':
+                self.player_ident = 'P1'
             
-
-
     def menu(self,index,options):
         #background do menu
-        rect = pygame.FRect(0,0,WINDOW_WIDTH-600,WINDOW_HEIGHT/2-100)
-        rect.center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT/2 +200)
-        pygame.draw.rect(self.display_surface,COLORS['white'],rect,0,4)
+        rect = pygame.FRect(0,0,WINDOW_WIDTH-500,WINDOW_HEIGHT/2-100)
+        rect.bottomright = (WINDOW_WIDTH-10, WINDOW_HEIGHT-10)
+        pygame.draw.rect(self.display_surface,COLORS['white'],rect,0,7)
         pygame.draw.rect(self.display_surface,COLORS['gray'],rect,6,6)
 
         #menu
@@ -123,21 +131,86 @@ class UI:
             text_rect = text_surf.get_rect(center = (x,y))
             self.display_surface.blit(text_surf,text_rect)
 
-    def update (self):
+    def identificacao(self,player):
+        rect = pygame.FRect(0,0,190,60)
+        rect.bottomleft = ((WINDOW_WIDTH-300)/2, (WINDOW_HEIGHT/2)+100)
+        pygame.draw.rect(self.display_surface,COLORS['white'],rect,0,7)
+        pygame.draw.rect(self.display_surface,COLORS['gray'],rect,6,6)
 
+        match player:
+            case 'P1': texto = 'Player 1:'
+            case 'P2': texto = 'Player 2:'
+        
+        text_surf = self.font.render(texto,True,'black')
+        text_rect = text_surf.get_rect(center = rect.center)
+        self.display_surface.blit(text_surf,text_rect)
+
+    def status(self):
+        rect = pygame.FRect(0,0,500,160)
+        pygame.draw.rect(self.display_surface,COLORS['white'],rect,0,7)
+        pygame.draw.rect(self.display_surface,COLORS['gray'],rect,6,6)
+
+        barra_vida1 = pygame.FRect(rect.left+10,rect.top+30,480,13)
+        barra_mana1 = pygame.FRect(rect.left+10,barra_vida1.bottom+10,480,13)
+        barra_vida2 = pygame.FRect(rect.left+10,barra_vida1.bottom+60,480,13)
+        barra_mana2 = pygame.FRect(rect.left+10,barra_vida2.bottom+10,480,13)
+
+        text1 = self.font.render('Player 1:',True,'black')
+        text1_rect = text1.get_rect(bottomleft = barra_vida1.topleft)
+        self.display_surface.blit(text1,text1_rect)
+
+        text2 = self.font.render('Player 2:',True,'black')
+        text2_rect = text2.get_rect(bottomleft = barra_vida2.topleft)
+        self.display_surface.blit(text2,text2_rect)
+
+        pygame.draw.rect(self.display_surface,COLORS['gray'],barra_vida1)
+        pygame.draw.rect(self.display_surface,COLORS['gray'],barra_mana1)
+
+        pygame.draw.rect(self.display_surface,COLORS['gray'],barra_vida2)
+        pygame.draw.rect(self.display_surface,COLORS['gray'],barra_mana2)
+
+        self.barra(barra_vida1,self.player1.Hp,self.player1.MaxHp)
+        self.barra(barra_mana1,self.player1.Mp,self.player1.MaxMp)
+        self.barra(barra_vida2,self.player2.Hp,self.player2.MaxHp)
+        self.barra(barra_mana2,self.player2.Mp,self.player2.MaxMp)
+
+    def barra(self, rect, valor, valor_max):
+        prop = rect.width / valor_max
+        self.font_pequena = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 13)
+        barra = pygame.FRect(rect.topleft, ( valor*prop,rect.height))
+        if valor_max == self.player1.MaxHp or valor_max == self.player2.MaxHp:
+            color = COLORS['red']
+        else:
+            color = COLORS['blue']
+        pygame.draw.rect(self.display_surface,color,barra)
+
+        texto = self.font_pequena.render(f'{valor} / {valor_max}',True,'black')
+        texto_rect = texto.get_rect(center = rect.center)
+        self.display_surface.blit(texto,texto_rect)
+
+    def update(self):
         self.input()
-
 
     def draw(self):
         match self.state:
             case 'Escolha': 
+                self.identificacao(self.player_ident)
                 self.menu(self.escolha_index,self.options_escolha)
+
             case 'Principal':
+                self.identificacao(self.player_ident)
                 self.menu(self.geral_index,self.options_geral)
+
             case 'Ataque Especial':
-                
+                self.identificacao(self.player_ident)
                 self.menu(self.ataque_index,self.options_ataque)
+
             case 'Ataque Básico': 
-                pass 
+                pass
+
             case 'Desviar': 
-                pass 
+                pass
+
+        if self.state != 'Escolha':
+            self.status()
+                 

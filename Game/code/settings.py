@@ -12,6 +12,7 @@ COLORS = {
     'red': '#ee1a0f',
     'gray': 'gray',
     'white': '#ffffff',
+    'blue': '#0373fc'
 }
 
 
