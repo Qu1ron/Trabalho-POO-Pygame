@@ -50,19 +50,19 @@ Para rodar o RPG Realm em sua máquina, siga os passos abaixo.
 
 A equipe foi dividida com as seguintes responsabilidades principais:
 
--   **Lucas (Arquiteto de Jogo)**:
+-   **Lucas Monteiro Cavaltanti (Arquiteto de Jogo)**:
     -   Estruturação do motor principal do jogo (game loop, janela, estados).
     -   Implementação da lógica central de combate e turnos.
     -   Integração entre a lógica de backend (`classes.py`) e a interface (`ui.py`).
     -   Gerenciamento e correção de bugs na lógica principal.
 
--   **Júlia (Desenvolvedora de UI)**:
+-   **Júlia MarinhoBomfim (Desenvolvedora de UI)**:
     -   Desenvolvimento completo do sistema de Interface do Usuário (UI).
     -   Criação dos menus interativos (Seleção de Personagem, Menu de Ações).
     -   Implementação da lógica de exibição de status (barras de HP e MP).
     -   Testes de usabilidade e correção de bugs na interface.
 
--   **Pedro (Desenvolvedor de Assets e Efeitos)**:
+-   **Pedro Henrique Maurício Alves (Desenvolvedor de Assets e Efeitos)**:
     -   Gestão e curadoria de todos os assets visuais e sonoros (sprites, cenários, fontes, etc.).
     - Implementação do sistema de áudio (músicas de fundo e efeitos sonoros).
     -   Desenvolvimento dos efeitos visuais (feedback de dano, animações).
