@@ -10,7 +10,7 @@ tela = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # Função para carregar uma imagem da pasta assets/imagens
 def carregar_imagem(nome_arquivo, redimensionar = None):
-    caminho = os.path.join(os.path.dirname(__file__), '..', 'assets', 'imagens', nome_arquivo)
+    caminho = os.path.join(BASE_DIR, 'assets', 'imagens', nome_arquivo)
     imagem = pygame.image.load(caminho).convert_alpha()
     
     if redimensionar:
@@ -20,7 +20,7 @@ def carregar_imagem(nome_arquivo, redimensionar = None):
 
 # Função para carregar um som da pasta assets/imagens
 def carregar_som(nome_arquivo):
-    caminho = os.path.join(os.path.dirname(__file__), '..', 'assets', 'sons', nome_arquivo)
+    caminho = os.path.join(BASE_DIR, 'assets', 'sons', nome_arquivo)
 
     return pygame.mixer.Sound(caminho)
 
@@ -48,16 +48,12 @@ MAPAS = {
 
 MUSICAS = {
     'floresta': [
-        os.path.join('assets', 'musicas', 'musica_floresta1.mp3'), 
-        os.path.join('assets', 'musicas', 'musica_floresta2.mp3')
-    ],
-    'castelo': [
-        os.path.join('assets', 'musicas', 'musica_castelo1.wav'), 
-        os.path.join('assets', 'musicas', 'musica_castelo2.mp3')
-    ],
-    'caverna': [
-        os.path.join('assets', 'musicas', 'musica_caverna1.mp3'),
-        os.path.join('assets', 'musicas', 'musica_caverna2.wav')
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_floresta1.mp3'), 
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_floresta2.mp3'),
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_castelo1.wav'), 
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_castelo2.mp3'),
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_caverna1.mp3'),
+        os.path.join(BASE_DIR, 'assets', 'musicas', 'musica_caverna2.wav')
     ]
 }
 
@@ -67,7 +63,7 @@ SONS = {
     'clique': carregar_som('clique.wav'),
 }
 
-FONTE_DANO = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 36)
+FONTE_DANO = pygame.font.Font(os.path.join(BASE_DIR, 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 36)
 
 
 def tocar_musicas_por_mapa(nome_mapa):
@@ -78,7 +74,7 @@ def tocar_musicas_por_mapa(nome_mapa):
         musica_escolhida = random.choice(listaDeMusicas)
 
         pygame.mixer.music.load(musica_escolhida)
-        pygame.mixer.music.set_volume(0.4)
+        pygame.mixer.music.set_volume(0.1)
         pygame.mixer.music.play(-1)
 
 def tocar_som(nome_som):
@@ -95,23 +91,6 @@ def mostrar_dano(alvo_rect, texto_dano):
 
     tela.blit(texto_surface, texto_rect)
 
-
-# Função o personagem mudar de cor quando receber dano
-def efeito_mudar_cor(sprite_original, cor_efeito, tempo_inicio):
-    tempo_atual = pygame.time.get_ticks()
-    tempo_decorrido = tempo_atual - tempo_inicio
-    
-    DURACAO_EFEITO_COR = 300 
-
-    if tempo_decorrido > DURACAO_EFEITO_COR:
-        return None
-
-    superficie_cor = pygame.Surface(sprite_original.get_size(), pygame.SRCALPHA)
-    superficie_cor.fill(cor_efeito)
-    
-    superficie_cor.blit(sprite_original, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-    
-    return superficie_cor
 
 def animacao_impulso_ataque(atacante_rect, tempo_inicio_impulso, direcao_personagem):
     tempo_atual = pygame.time.get_ticks()

@@ -5,7 +5,10 @@ from random import choice, randint
 from time import sleep
 from pygame.math import Vector2
 
-WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720 
+
+WINDOW_WIDTH, WINDOW_HEIGHT = 1280,720
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 COLORS = {
     'black': '#000000',

@@ -8,7 +8,9 @@ class UI:
     def __init__ (self,player1,player2,get_input):
 
         self.display_surface = pygame.display.get_surface()
-        self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 20) # Para ficar com a fonte bonitinha
+
+        self.font = pygame.font.Font(os.path.join(BASE_DIR, 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 20) # Para ficar com a fonte bonitinha
+
 
         self.player1 = player1
         self.player2 = player2
