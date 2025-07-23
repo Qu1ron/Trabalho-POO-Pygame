@@ -108,19 +108,27 @@ class Jogo:
             self.timer_tend.activate()
         
      def apply_atk(self,skill):
-        if skill != 'atk_basico':
-            dmg = Ataques[skill]['Damage']
-            mp = Ataques[skill]['Mp']
-            print(f"Mp antes: {self.uip1.atacante.Mp}\n")
-            self.uip1.atacante.Mp -=mp
-        else:
-            dmg = self.uip1.atacante.ataque()
-        if self.Turn == 'atacante':
-            self.dmg_p1 = dmg
-        else:
-            self.dmg_p2 = dmg
+        try: 
+            if skill != 'atk_basico':
+                dmg = Ataques[skill]['Damage']
+                mp = Ataques[skill]['Mp']
+                print(f"Mp antes: {self.uip1.atacante.Mp}\n")
+                self.uip1.atacante.Mp -=mp
+            else:
+                dmg = self.uip1.atacante.ataque()
+            if self.Turn == 'atacante':
+                self.dmg_p1 = dmg
+            else:
+                self.dmg_p2 = dmg
 
-        print(f"Mp depois: {self.uip1.atacante.Mp}\n")
+            print(f"Mp depois: {self.uip1.atacante.Mp}\n")
+        except KeyError:
+            print(f"\nERRO: A skill '{skill}' nao foi encontrada no dicionario de Ataques!") 
+            # Define um dano padrão ou simplesmente não faz nada 
+            if self.Turn == 'atacante': 
+                self.dmg_p1 = 10 
+            else: 
+                self.dmg_p2 = 10 
          
      def change_turn(self):
         self.uip1.atacante.kill()

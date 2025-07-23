@@ -7,6 +7,8 @@ class Log:
     def __init__(self,arquivo="battle_log.txt" ) :
         self.terminal = sys.stdout 
         #Para não "perder" a saída do terminal pois ela será modificada, originalmente a saída é configurada para o terminal
+
+        
         self.log_file = open(arquivo,"w",encoding="utf-8") 
         #Abertura do arquivo para que possa ser escrito
         #utf-8 é a biblioteca geral e moderna que abrange vários caracteres 

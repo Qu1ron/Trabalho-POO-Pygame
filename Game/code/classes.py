@@ -119,8 +119,13 @@ class Mago(pygame.sprite.Sprite, Personagem):
         #pra cada nome e detalhe no dicionario Ataques, se detalhe = 'Mago' agente copia todos os detalhes da skill com esse nome
         self.skills = {}
         for nome, detalhe in skills.items(): 
-            if detalhe['Classe'] == 'Mago':
-                self.skills[nome] = detalhe
+            try:
+                if detalhe['Classe'] == 'Mago':
+                    self.skills[nome] = detalhe
+            except KeyError:
+                # Imprime um aviso no log se uma skill estiver mal configurada
+                print(f"\nAVISO: A habilidade '{nome}' no dicionario de Ataques nao tem uma 'Classe'")
+
     
     def check_p2(self):
         if not self.p2:
@@ -164,9 +169,13 @@ class Guerreiro(pygame.sprite.Sprite, Personagem):
         self.original_image = self.image.copy()
 
         self.skills = {}
+        
         for nome, detalhe in skills.items():
-            if detalhe['Classe'] == 'Guerreiro':
-                self.skills[nome] = detalhe
+            try:
+                if detalhe['Classe'] == 'Guerreiro':
+                    self.skills[nome] = detalhe
+            except KeyError:
+                print(f"\nAVISO: A habilidade '{nome}' no dicionario de Ataques nao tem uma 'Classe'")       
     
     def check_p2(self):
         if not self.p2:
@@ -213,8 +222,11 @@ class Arqueiro(pygame.sprite.Sprite, Personagem) :
 
         self.skills = {}
         for nome ,detalhe in skills.items():
-            if detalhe ['Classe'] == 'Arqueiro' :
-                self.skills[nome] = detalhe
+            try:
+                if detalhe ['Classe'] == 'Arqueiro' :
+                    self.skills[nome] = detalhe
+            except KeyError:
+                print(f"\nAVISO: A habilidade '{nome}' no dicionario de Ataques nao tem uma 'Classe'")
 
     def check_p2(self):
         if not self.p2:

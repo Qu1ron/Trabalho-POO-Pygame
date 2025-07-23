@@ -37,12 +37,21 @@ class UI:
         SONS['clique'].set_volume(0.35)
 
     def get_skills(self,player):
-        for nome, detalhes in Ataques.items():
-            if detalhes['Classe'] == player.classe:
-                self.nome_ataque.append(nome)
-                texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
-                self.options_ataque.append(texto_formatado)
-
+        
+            for nome, detalhes in Ataques.items():
+                try:
+                    if detalhes['Classe'] == player.classe:
+                        self.nome_ataque.append(nome)
+                        texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
+                        self.options_ataque.append(texto_formatado)
+                except KeyError as key:
+                    print(f"\nERRO: A habilidade '{nome}' esta com dados incompletos (falta {key}), logo nao sera exibida")
+                    # Pega as classes do Guerreiro como base
+                    for nome, detalhes in Ataques.items():
+                        if detalhes['Guerreiro'] == player.classe:
+                            self.nome_ataque.append(nome)
+                            texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
+                            self.options_ataque.append(texto_formatado)
     def input(self):
         
         keys = pygame.key.get_just_pressed()
