@@ -247,11 +247,11 @@ class Jogo:
             pygame.display.update()
 
         pygame.quit()
-        log_obj.fechar()
 
 
 
 if __name__ == '__main__':
-    jogo = Jogo()
-    jogo.run()
+    with log_obj:
+        jogo = Jogo()
+        jogo.run()
 

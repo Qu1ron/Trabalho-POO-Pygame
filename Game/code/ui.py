@@ -8,9 +8,12 @@ class UI:
     def __init__ (self,player1,player2,get_input):
 
         self.display_surface = pygame.display.get_surface()
-
-        self.font = pygame.font.Font(os.path.join(BASE_DIR, 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 20) # Para ficar com a fonte bonitinha
-
+        try:
+            self.font = pygame.font.Font(os.path.join(BASE_DIR, 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 20) # Para ficar com a fonte bonitinha
+        except pygame.error:
+            print("Erro no carregamento da fonte principal")
+            #Caso não encontre o arquivo para a fonte
+            self.font = pygame.font.Font(None, 20)
 
         self.player1 = player1
         self.player2 = player2
@@ -52,6 +55,7 @@ class UI:
                             self.nome_ataque.append(nome)
                             texto_formatado = f"{nome} | Mana: {detalhes['Mp']} | Dano: {detalhes['Damage']}"
                             self.options_ataque.append(texto_formatado)
+   
     def input(self):
         
         keys = pygame.key.get_just_pressed()
@@ -196,7 +200,13 @@ class UI:
 
     def barra(self, rect, valor, valor_max,tipo):
         prop = rect.width / valor_max
-        self.font_pequena = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 13)
+        #Caso não encontre o arquivo para a fonte
+        try:
+            self.font_pequena = pygame.font.Font(os.path.join(os.path.dirname(__file__), '..', 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 13)
+        except pygame.error:
+            print("Erro no carregamento da fonte pequena")
+            #Substituição de fonte
+            self.font_pequena = pygame.font.Font(None, 13) 
         barra = pygame.FRect(rect.topleft, ( valor*prop,rect.height))
         if tipo == 'hp':
             if valor >= valor_max/2 :
