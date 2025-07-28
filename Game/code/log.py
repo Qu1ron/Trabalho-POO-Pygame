@@ -7,9 +7,17 @@ class Log:
     def __init__(self,arquivo="battle_log.txt" ) :
         self.terminal = sys.stdout 
         #Para não "perder" a saída do terminal pois ela será modificada, originalmente a saída é configurada para o terminal
-        self.log_file = open(arquivo,"w",encoding="utf-8") 
-        #Abertura do arquivo para que possa ser escrito
-        #utf-8 é a biblioteca geral e moderna que abrange vários caracteres 
+        self.log_file = None 
+        self.arquivo = arquivo
+    
+    def __enter__ (self ) :
+        try:
+            self.log_file = open("battle_log.txt", "w", encoding="utf-8")
+        except (PermissionError, FileNotFoundError) as e:
+            print(f"Erro ao abrir o arquivo , ERRO: {e}")
+            self.log_file = None
+        sys.stdout = self
+        return self
         
     def write (self,message ) :
     #"Duplica" o texto para aparecer tanto no terminal quanto no arquivo
@@ -25,8 +33,9 @@ class Log:
         self.log_file.flush() 
         #Para o arquivo
     
-    def fechar (self):
-    #Para fechar o arquivo prevenindo arquivos corrompidos e informações incompletas
-        self.log_file.close()
+    def __exit__ (self, exc_type, exc_value, exc_tb):
+        #Parâmetros essenciais para o Python poder fechar caso ocorra algum erro
         sys.stdout = self.terminal
-        #Restaurando a saído do programa para o terminal novamente
+        #Caso ocorra algum erro, o arquivo será fechado
+        if self.log_file:
+            self.log_file.close()

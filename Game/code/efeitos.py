@@ -1,48 +1,65 @@
 import pygame
 import random
 from settings import *
+from concurrent.futures import ThreadPoolExecutor
 
 pygame.init()
 pygame.mixer.init()
 
 tela = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
+# Cria um pool de threads para carregamento paralelo
+executor = ThreadPoolExecutor(max_workers=4) # Pode ajustar o número de workers
+
 # Função para carregar uma imagem da pasta assets/imagens
 def carregar_imagem(nome_arquivo, redimensionar = None):
     caminho = os.path.join(BASE_DIR, 'assets', 'imagens', nome_arquivo)
-    imagem = pygame.image.load(caminho).convert_alpha()
-    
-    if redimensionar:
-        imagem = pygame.transform.scale(imagem, redimensionar)
-
-    return imagem
+    try:
+        imagem = pygame.image.load(caminho).convert_alpha()
+        if redimensionar:
+            imagem = pygame.transform.scale(imagem, redimensionar)
+        return imagem
+    except pygame.error as e:
+        print(f"Erro ao carregar imagem {nome_arquivo}: {e}")
+        return pygame.Surface((100, 100)) # Retorna uma superfície vazia em caso de erro
 
 # Função para carregar um som da pasta assets/imagens
 def carregar_som(nome_arquivo):
     caminho = os.path.join(BASE_DIR, 'assets', 'sons', nome_arquivo)
+    try:
+        return pygame.mixer.Sound(caminho)
+    except pygame.error as e:
+        print(f"Erro ao carregar som {nome_arquivo}: {e}")
+        return None # Retorna None em caso de erro
 
-    return pygame.mixer.Sound(caminho)
+# Funções auxiliares para submeter tarefas ao executor
+def submit_carregar_imagem(nome_arquivo, redimensionar=None):
+    return executor.submit(carregar_imagem, nome_arquivo, redimensionar)
 
+def submit_carregar_som(nome_arquivo):
+    return executor.submit(carregar_som, nome_arquivo)
+
+# Submete o carregamento de todos os assets em paralelo
 # Sprites com suas respectivas imagens frente e costas
-SPRITES = {
+SPRITES_FUTURES = {
     'mago': {
-       'frente': carregar_imagem('mago_frente.png', (150, 150)),
-       'costas': carregar_imagem('mago_costas.png', (300, 300))
+       'frente': submit_carregar_imagem('mago_frente.png', (150, 150)),
+       'costas': submit_carregar_imagem('mago_costas.png', (300, 300))
     },
     'guerreiro': {
-       'frente': carregar_imagem('guerreiro_frente.png', (150, 150)),
-       'costas': carregar_imagem('guerreiro_costas.png', (300, 300))
+       'frente': submit_carregar_imagem('guerreiro_frente.png', (150, 150)),
+       'costas': submit_carregar_imagem('guerreiro_costas.png', (300, 300))
     },
     'arqueiro': {
-       'frente': carregar_imagem('arqueiro_frente.png', (150, 150)),
-       'costas': carregar_imagem('arqueiro_costas.png', (300, 300))
+       'frente': submit_carregar_imagem('arqueiro_frente.png', (150, 150)),
+       'costas': submit_carregar_imagem('arqueiro_costas.png', (300, 300))
     },
 }
 
-MAPAS = {
-    'floresta': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
-    'castelo': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
-    'caverna': carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT))
+MAPAS_FUTURES = {
+    'floresta': submit_carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'castelo': submit_carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT)),
+    'caverna': submit_carregar_imagem('mapa_floresta.png', (WINDOW_WIDTH, WINDOW_HEIGHT))
 }
 
 MUSICAS = {
@@ -56,11 +73,16 @@ MUSICAS = {
     ]
 }
 
-SONS = {
-    'ataque': carregar_som('ataque.wav'),
-    'dano': carregar_som('dano.mp3'),
-    'clique': carregar_som('clique.wav'),
+SONS_FUTURES = {
+    'ataque': submit_carregar_som('ataque.wav'),
+    'dano': submit_carregar_som('dano.mp3'),
+    'clique': submit_carregar_som('clique.wav'),
 }
+
+# Aguarda a conclusão de todas as tarefas e obtém os resultados
+SPRITES = {k: {sk: sf.result() for sk, sf in v.items()} for k, v in SPRITES_FUTURES.items()}
+MAPAS = {k: f.result() for k, f in MAPAS_FUTURES.items()}
+SONS = {k: f.result() for k, f in SONS_FUTURES.items()}
 
 FONTE_DANO = pygame.font.Font(os.path.join(BASE_DIR, 'assets', 'fontes', 'PressStart2P-Regular.ttf'), 36)
 
@@ -71,10 +93,12 @@ def tocar_musicas_por_mapa(nome_mapa):
     if nome_mapa in MUSICAS:
         listaDeMusicas = MUSICAS[nome_mapa]
         musica_escolhida = random.choice(listaDeMusicas)
-
-        pygame.mixer.music.load(musica_escolhida)
-        pygame.mixer.music.set_volume(0.1)
-        pygame.mixer.music.play(-1)
+        try:
+            pygame.mixer.music.load(musica_escolhida)
+            pygame.mixer.music.set_volume(0.1)
+            pygame.mixer.music.play(-1)
+        except pygame.error as e:
+            print(f"Erro ao carregar ou tocar música {musica_escolhida}: {e}")
 
 def tocar_som(nome_som):
     if SONS[nome_som]:
@@ -113,3 +137,5 @@ def animacao_impulso_ataque(atacante_rect, tempo_inicio_impulso, direcao_persona
         return deslocamento_x
     else: # 'frente'
         return -deslocamento_x
+
+
