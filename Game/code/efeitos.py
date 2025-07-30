@@ -19,7 +19,7 @@ def carregar_imagem(nome_arquivo, redimensionar = None):
         if redimensionar:
             imagem = pygame.transform.scale(imagem, redimensionar)
         return imagem
-    except pygame.error as e:
+    except Exception as e:
         print(f"Erro ao carregar imagem {nome_arquivo}: {e}")
         return pygame.Surface((100, 100)) # Retorna uma superfície vazia em caso de erro
 
@@ -28,7 +28,7 @@ def carregar_som(nome_arquivo):
     caminho = os.path.join(BASE_DIR, 'assets', 'sons', nome_arquivo)
     try:
         return pygame.mixer.Sound(caminho)
-    except pygame.error as e:
+    except Exception as e:
         print(f"Erro ao carregar som {nome_arquivo}: {e}")
         return None # Retorna None em caso de erro
 
