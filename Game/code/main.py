@@ -240,10 +240,14 @@ class Jogo:
             self.uip1.update()
             
             # draw
+            self.display_surface.fill(COLORS['black']) 
+        
             self.display_surface.blit(MAPAS['floresta'], (0,0))
-            self.uip1.draw()
+        
             self.all_sprites.draw(self.display_surface)
-            
+        
+            self.uip1.draw()
+        
             pygame.display.update()
 
         pygame.quit()
